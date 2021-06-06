@@ -40,8 +40,10 @@ How many hours has it been since your last drink? 1
 
 Your BAC is 0.092206
 It is not legal for you to drive.
+
 Constraint
 Prevent the user from entering non-numeric values.
+
 Challenges
 Handle metric units.
 Look up the legal BAC limit by state and prompt for the state. Display a message that states whether or not it’s legal to drive based on the computed BAC.
@@ -50,6 +52,31 @@ Develop this as a mobile application that makes it easy to record each drink, up
 
 public class App {
     public static void main(String[] args) {
-        
+        Scanner in = new Scanner(System.in);
+        // input
+        System.out.print("Enter a 1 if you are male or a 2 if you are female: ");
+        int gender = in.nextInt();
+        System.out.print("How many ounces of alcohol did you have? ");
+        float A = in.nextFloat();
+        System.out.print("What is your weight, in pounds? ");
+        float W = in.nextFloat();
+        System.out.print("How many hours has it been since your last drink? ");
+        int H = in.nextInt();
+
+        // convert gender to alcohol distribution ratio
+        float r = (float) ((gender == 1) ? 0.73 : 0.66);
+
+        // calculations
+        float BAC = (float) ((A * 5.14 / W * r) - 0.015 * H);
+
+        // display BAC
+        System.out.printf("Your BAC is %.7f\n", BAC);
+        // display whether or not it is legal to drive
+        if (BAC < 0.08) {
+            System.out.println("It is legal for you to drive.");
+        }
+        else {
+            System.out.println("It is not legal for you to drive.");
+        }
     }
 }
